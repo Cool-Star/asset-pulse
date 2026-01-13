@@ -1,0 +1,21 @@
+<svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background Hexagon -->
+    <path
+      d="M256 30 L470 140 V372 L256 482 L42 372 V140 Z"
+      fill="transparent"
+      stroke="#7000ff"
+      stroke-width="24"
+    />
+
+    <!-- Pulse Line -->
+    <path
+      d="M100 256 H170 L210 130 L290 382 L330 256 H412"
+      stroke="#00f3ff"
+      stroke-width="32"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Accent Dots -->
+    <circle cx="412" cy="256" r="16" fill="#00f3ff" />
+</svg>

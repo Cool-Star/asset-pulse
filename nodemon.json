@@ -1,0 +1,15 @@
+{
+  "watch": ["src/main"],
+  "ext": "ts,js",
+  "ignore": ["src/main/**/*.test.ts", "src/main/**/*.spec.ts"],
+  "exec": "npm run build:electron && electron .",
+  "delay": 2000,
+  "restartable": "rs",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "signal": "SIGKILL",
+  "killTimeout": 3000,
+  "verbose": true,
+  "legacyWatch": false
+}

@@ -1,0 +1,80 @@
+// 颜色变量
+$primary-color: #007acc;
+$primary-hover: #005a9e;
+$secondary-color: #3c3c3c;
+$secondary-hover: #4a4a4a;
+
+// 背景颜色
+$bg-primary: #1e1e1e;
+$bg-secondary: #2d2d30;
+$bg-tertiary: #3c3c3c;
+$bg-quaternary: #252526;
+
+// 边框颜色
+$border-primary: #3e3e42;
+$border-secondary: #6a6a6a;
+
+// 文字颜色
+$text-primary: #ffffff;
+$text-secondary: #d4d4d4;
+$text-tertiary: #cccccc;
+$text-muted: #6a6a6a;
+
+// 状态颜色
+$success-color: #4caf50;
+$success-bg: #1e3a1e;
+$success-border: #2e7d32;
+
+$error-color: #f44336;
+$error-bg: #3a1e1e;
+$error-border: #7d2e2e;
+
+$warning-color: #ff9800;
+$warning-bg: #3a2e1e;
+$warning-border: #7d5e2e;
+
+// 间距
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 12px;
+$spacing-lg: 16px;
+$spacing-xl: 20px;
+$spacing-2xl: 24px;
+$spacing-3xl: 32px;
+
+// 字体大小
+$font-size-xs: 0.8em;
+$font-size-sm: 0.9em;
+$font-size-md: 1em;
+$font-size-lg: 1.1em;
+$font-size-xl: 1.2em;
+$font-size-2xl: 1.8em;
+
+// 字体权重
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// 边框圆角
+$border-radius-sm: 4px;
+$border-radius-md: 6px;
+$border-radius-lg: 8px;
+$border-radius-xl: 12px;
+$border-radius-full: 20px;
+
+// 阴影
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+$shadow-lg: 0 8px 25px rgba(0, 122, 204, 0.15);
+
+// 过渡动画
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// 断点
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;

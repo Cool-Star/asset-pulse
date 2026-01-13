@@ -1,0 +1,230 @@
+@use './variables'as *;
+@use './mixins'as *;
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #050508;
+  /* Deep dark background */
+  color: #e0e0e0;
+  line-height: 1.6;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  @include custom-scrollbar;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cyberpunk / Dark Tech Theme Customization */
+:root {
+  /* Neon Accents */
+  --cyber-primary: #00f3ff;
+  --cyber-secondary: #7000ff;
+  --cyber-success: #0afff0;
+  --cyber-warning: #ffcc00;
+  --cyber-danger: #ff0055;
+  --cyber-bg: #000000;
+  --cyber-card-bg: #111116;
+  --cyber-border: #333333;
+  --cyber-text-main: #ffffff;
+  --cyber-text-sub: #cccccc;
+
+  /* Overriding Element Plus Variables for Dark Mode */
+  --el-color-primary: var(--cyber-primary);
+  --el-color-primary-light-3: #4defff;
+  --el-color-primary-light-5: #79f5ff;
+  --el-color-primary-light-7: #aef9ff;
+  --el-color-primary-light-9: #dbfdff;
+  --el-color-primary-dark-2: #00c2cc;
+
+  --el-color-success: var(--cyber-success);
+  --el-color-warning: var(--cyber-warning);
+  --el-color-danger: var(--cyber-danger);
+
+  --el-bg-color: var(--cyber-bg);
+  --el-bg-color-page: #0a0b12;
+  --el-bg-color-overlay: #151620;
+
+  --el-text-color-primary: var(--cyber-text-main);
+  --el-text-color-regular: var(--cyber-text-sub);
+  --el-text-color-secondary: #606270;
+
+  --el-border-color: #2a2b3d;
+  --el-border-color-light: #35364a;
+  --el-border-color-lighter: #40415a;
+
+  --el-fill-color: #1a1b26;
+  --el-fill-color-light: #20212e;
+  --el-fill-color-lighter: #262736;
+  --el-fill-color-blank: #050508;
+
+  /* Custom Glow Effects */
+  --neon-glow: 0 0 10px rgba(0, 243, 255, 0.5);
+  --neon-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0b12;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyber-primary);
+}
+
+/* Element Plus Component Overrides */
+
+/* Cards with Glassmorphism */
+.el-card {
+  background: var(--cyber-card-bg) !important;
+  border: 1px solid var(--cyber-border) !important;
+  backdrop-filter: blur(10px);
+  color: var(--cyber-text-main);
+  transition: all 0.3s ease;
+}
+
+.el-card:hover {
+  box-shadow: var(--neon-glow), var(--neon-box-shadow);
+  border-color: var(--cyber-primary) !important;
+}
+
+/* Inputs */
+.el-input__wrapper,
+.el-textarea__inner {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  box-shadow: none !important;
+  border: 1px solid var(--el-border-color);
+  color: #fff !important;
+  transition: all 0.3s;
+}
+
+.el-input__wrapper:hover,
+.el-input__wrapper.is-focus {
+  border-color: var(--cyber-primary) !important;
+  box-shadow: 0 0 5px rgba(0, 243, 255, 0.3) !important;
+}
+
+/* Buttons */
+.el-button--primary {
+  background: transparent !important;
+  border: 1px solid var(--cyber-primary) !important;
+  color: var(--cyber-primary) !important;
+  box-shadow: 0 0 5px rgba(0, 243, 255, 0.2);
+}
+
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background: var(--cyber-primary) !important;
+  color: #000 !important;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.6);
+}
+
+.el-button--success {
+  background: transparent !important;
+  border: 1px solid var(--cyber-success) !important;
+  color: var(--cyber-success) !important;
+}
+
+.el-button--success:hover {
+  background: var(--cyber-success) !important;
+  color: #000 !important;
+  box-shadow: 0 0 15px rgba(10, 255, 240, 0.6);
+}
+
+.el-button--danger {
+  background: transparent !important;
+  border: 1px solid var(--cyber-danger) !important;
+  color: var(--cyber-danger) !important;
+}
+
+.el-button--danger:hover {
+  background: var(--cyber-danger) !important;
+  color: #fff !important;
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+}
+
+/* Tables */
+.el-table {
+  --el-table-bg-color: transparent !important;
+  --el-table-tr-bg-color: transparent !important;
+  --el-table-header-bg-color: rgba(255, 255, 255, 0.05) !important;
+  --el-table-row-hover-bg-color: rgba(0, 243, 255, 0.1) !important;
+  --el-table-border-color: #333 !important;
+  color: var(--cyber-text-sub) !important;
+  background-color: transparent !important;
+}
+
+.el-table th,
+.el-table tr {
+  background-color: transparent !important;
+}
+
+.el-table td.el-table__cell,
+.el-table th.el-table__cell.is-leaf {
+  border-bottom: 1px solid #2a2b3d !important;
+}
+
+/* Dialogs */
+.el-dialog {
+  background: #12121a !important;
+  border: 1px solid var(--cyber-border);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8) !important;
+}
+
+.el-dialog__title {
+  color: var(--cyber-primary) !important;
+}
+
+/* Loading */
+.el-loading-mask {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Alerts */
+.el-alert {
+  background-color: rgba(20, 20, 30, 0.9) !important;
+  border: 1px solid;
+}
+
+.el-alert--warning {
+  border-color: var(--cyber-warning);
+}
+
+.el-alert--success {
+  border-color: var(--cyber-success);
+}
+
+/* Progress */
+.el-progress-bar__inner {
+  box-shadow: 0 0 10px currentColor;
+}
+
+.el-tag.el-tag--success {
+  color: rgb(64, 141, 64) !important;
+}
+
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
