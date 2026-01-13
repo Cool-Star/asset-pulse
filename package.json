@@ -15,6 +15,12 @@
     "generate:icon": "electron scripts/generate-icon.js",
     "postinstall": "electron-builder install-app-deps"
   },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "electron",
+      "esbuild"
+    ]
+  },
   "keywords": [
     "electron",
     "vue",
