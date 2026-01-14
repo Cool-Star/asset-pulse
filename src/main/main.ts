@@ -36,7 +36,6 @@ function createWindow(): void {
     icon: path.join(__dirname, "../resources/icon.svg"),
     show: false, // 先不显示，等加载完成后再显示
     titleBarStyle: "default",
-    autoHideMenuBar: true, // 自动隐藏菜单栏 (Windows/Linux)
   });
 
   // 加载应用逻辑封装
@@ -45,7 +44,7 @@ function createWindow(): void {
       try {
         await mainWindow?.loadURL("http://localhost:5173");
         // 开发环境下加载成功后打开开发者工具
-        mainWindow?.webContents.openDevTools();
+        // mainWindow?.webContents.openDevTools();
       } catch (e) {
         console.log("Vite server not ready, retrying in 1s...", e);
         setTimeout(loadRenderer, 1000);

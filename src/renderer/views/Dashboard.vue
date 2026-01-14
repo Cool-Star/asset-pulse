@@ -654,8 +654,12 @@ const startProbe = async () => {
     await (window as any).electron.invoke("probe:start");
     isProbing.value = true;
     ElMessage.success("已开始后台探活");
-  } catch (error) {
-    ElMessage.error("启动失败");
+  } catch (error: any) {
+    console.error(error);
+    const msg = error.message || "启动失败";
+    // Clean up Electron error prefix if present
+    const cleanMsg = msg.replace(/^Error invoking remote method '[^']+': Error: /, "");
+    ElMessage.error(cleanMsg);
   } finally {
     probingLoading.value = false;
   }

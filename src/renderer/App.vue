@@ -12,6 +12,7 @@
           mode="horizontal"
           class="nav-menu"
           router
+          :ellipsis="false"
         >
           <el-menu-item index="/">
             <el-icon><PieChart /></el-icon>

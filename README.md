@@ -48,8 +48,8 @@ AssetPulse 是一款基于 Electron + Vue 3 构建的跨平台桌面应用，专
 
 ```bash
 # 克隆项目
-git clone https://github.com/your-username/AssetPulse.git
-cd AssetPulse
+git clone https://github.com/Cool-Star/asset-pulse.git
+cd asset-pulse
 
 # 安装依赖
 pnpm install

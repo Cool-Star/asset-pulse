@@ -125,8 +125,20 @@
               <span class="info-label">重启应用</span>
               <span class="info-desc">遇到异常或更新配置后可尝试重启</span>
             </div>
-            <el-button type="warning" plain @click="restartApp" icon="Refresh">
+            <el-button type="info" @click="restartApp" icon="Refresh">
               立即重启
+            </el-button>
+          </div>
+          <el-divider />
+          <div class="flex-between">
+            <div class="system-info">
+              <span class="info-label">清空数据</span>
+              <span class="info-desc"
+                >删除所有资产和探测历史记录 (不可恢复)</span
+              >
+            </div>
+            <el-button type="danger" plain @click="clearData" icon="Delete">
+              清空数据
             </el-button>
           </div>
         </el-card>
@@ -144,13 +156,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import {
   Message,
   Key,
   Connection,
   Check,
   Refresh,
+  Delete,
 } from "@element-plus/icons-vue";
 
 const config = ref({
@@ -253,6 +266,27 @@ const restartApp = async () => {
   }
 };
 
+const clearData = async () => {
+  try {
+    await ElMessageBox.confirm(
+      "确定要清空所有资产和历史记录吗？此操作不可恢复。",
+      "警告",
+      {
+        confirmButtonText: "确定清空",
+        cancelButtonText: "取消",
+        type: "warning",
+      }
+    );
+
+    await (window as any).electron.invoke("assets:clear");
+    ElMessage.success("数据已清空");
+  } catch (error) {
+    if (error !== "cancel") {
+      ElMessage.error("清空失败");
+    }
+  }
+};
+
 onMounted(() => {
   loadConfig();
 });
@@ -270,7 +304,7 @@ onMounted(() => {
 .settings-container {
   max-width: 900px;
   margin: 0 auto;
-  padding-bottom: 40px;
+  padding-bottom: 120px;
 }
 
 .settings-section {

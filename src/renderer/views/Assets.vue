@@ -2,13 +2,25 @@
   <div class="assets-view">
     <div class="toolbar">
       <el-button @click="fetchAssets" icon="Refresh">刷新</el-button>
-      <el-button type="warning" @click="clearAssets" icon="Delete"
-        >清空所有</el-button
-      >
     </div>
 
     <div class="table-container">
-      <el-auto-resizer>
+      <div v-if="assets.length === 0" class="empty-state">
+        <el-empty description="暂无资产数据" :image-size="200">
+          <template #image>
+            <div class="empty-icon-wrapper">
+              <el-icon :size="80" class="empty-icon-main"><Monitor /></el-icon>
+              <div class="radar-ring ring-1"></div>
+              <div class="radar-ring ring-2"></div>
+              <div class="radar-line"></div>
+            </div>
+          </template>
+          <template #extra>
+            <p class="empty-tip">请前往仪表盘导入资产或添加新的探测任务</p>
+          </template>
+        </el-empty>
+      </div>
+      <el-auto-resizer v-else>
         <template #default="{ height, width }">
           <el-table-v2
             :columns="columns as any"
@@ -26,6 +38,13 @@
 <script setup lang="ts">
 import { ref, onMounted, h } from "vue";
 import { ElTag, ElAutoResizer, ElTableV2 } from "element-plus";
+import {
+  Refresh,
+  Delete,
+  Monitor,
+  DataLine,
+  Aim,
+} from "@element-plus/icons-vue";
 
 const assets = ref<any[]>([]);
 
@@ -98,5 +117,22 @@ onMounted(() => {
 .table-container {
   flex: 1;
   overflow: hidden;
+  position: relative;
+}
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.empty-tip {
+  color: var(--cyber-text-sub);
+  font-size: 14px;
+  margin-top: 10px;
 }
 </style>

@@ -97,6 +97,11 @@ export class IPCService {
 
     // Probe
     ipcMain.handle("probe:start", (_, interval?: number) => {
+      const assets = this.db.getAssets();
+      if (assets.length === 0) {
+        throw new Error("暂无资产，无法开始探活");
+      }
+
       // Run in background, don't await
       // Default to loop mode as requested by user ("Cyclic probing")
       let loopInterval = interval;
