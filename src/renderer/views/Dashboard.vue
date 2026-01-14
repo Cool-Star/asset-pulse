@@ -103,7 +103,7 @@
     </el-row>
 
     <!-- Trend Analysis Row -->
-    <el-row class="mb-4">
+    <el-row class="mb-4" v-if="globalStats.total > 0">
       <el-col :span="24">
         <el-card
           class="chart-card"
@@ -116,7 +116,7 @@
     </el-row>
 
     <!-- Regional Distribution & Details Row -->
-    <el-row :gutter="20" class="mb-4">
+    <el-row v-if="globalStats.total > 0" :gutter="20" class="mb-4">
       <!-- Region Chart -->
       <el-col :span="8">
         <el-card class="chart-card" shadow="never">
@@ -351,6 +351,7 @@ const fetchStats = async () => {
       rate: total > 0 ? ((alive / total) * 100).toFixed(2) : "0.00",
     };
 
+    await nextTick();
     updateChart();
 
     history.value = await (window as any).electron.invoke("history:get");
@@ -658,7 +659,10 @@ const startProbe = async () => {
     console.error(error);
     const msg = error.message || "启动失败";
     // Clean up Electron error prefix if present
-    const cleanMsg = msg.replace(/^Error invoking remote method '[^']+': Error: /, "");
+    const cleanMsg = msg.replace(
+      /^Error invoking remote method '[^']+': Error: /,
+      ""
+    );
     ElMessage.error(cleanMsg);
   } finally {
     probingLoading.value = false;
