@@ -4,7 +4,9 @@
 
 AssetPulse 是一款基于 Electron + Vue 3 构建的跨平台桌面应用，专为安全团队和资产管理员设计。它深度集成了 FOFA 搜索引擎，支持一键导入资产，提供多协议（ICMP/HTTP/TCP）自动化存活探测，并通过精美的可视化仪表盘实时展示资产状态与趋势。
 
-![Dashboard Preview](resources/icon.png)
+![Dashboard Preview](resources/image.png)
+![Trend Analysis](resources/image-1.png)
+![Regional Distribution](resources/image-2.png)
 
 ## ✨ 核心特性 (Features)
 
@@ -23,6 +25,7 @@ AssetPulse 是一款基于 Electron + Vue 3 构建的跨平台桌面应用，专
 - **实时心电图**：以 ECG 心电图形式展示实时的探测脉冲，直观感受网络“心跳”。
 - **趋势分析**：通过折线图记录“总资产数”与“存活资产数”的历史变化趋势。
 - **地域分布**：自动解析资产 IP 归属地，通过饼图展示各地区的资产存活率分布。
+
 
 ### 📑 数据管理 (Data Management)
 - **本地数据库**：内置 SQLite (better-sqlite3) 数据库，确保数据隐私与本地化存储。
