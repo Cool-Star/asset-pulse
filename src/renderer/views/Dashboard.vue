@@ -94,23 +94,30 @@
             padding: '10px 20px',
           }"
         >
-          <div
-            ref="ecgChartRef"
+          <v-chart
+            class="chart"
+            :option="ecgOption"
+            autoresize
             style="width: 100%; flex: 1; min-height: 120px"
-          ></div>
+          />
         </el-card>
       </el-col>
     </el-row>
 
     <!-- Trend Analysis Row -->
-    <el-row class="mb-4" v-if="globalStats.total > 0">
+    <el-row v-if="globalStats.total > 0" class="mb-4">
       <el-col :span="24">
         <el-card
           class="chart-card"
           shadow="never"
           :body-style="{ padding: '10px 20px' }"
         >
-          <div ref="lineChartRef" style="width: 100%; height: 350px"></div>
+          <v-chart
+            class="chart"
+            :option="lineOption"
+            autoresize
+            style="width: 100%; height: 350px"
+          />
         </el-card>
       </el-col>
     </el-row>
@@ -128,7 +135,12 @@
               >
             </div>
           </template>
-          <div ref="chartRef" style="width: 100%; height: 400px"></div>
+          <v-chart
+            class="chart"
+            :option="pieOption"
+            autoresize
+            style="width: 100%; height: 400px"
+          />
         </el-card>
       </el-col>
 
@@ -269,8 +281,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, reactive } from "vue";
-import * as echarts from "echarts";
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -281,10 +292,37 @@ import {
   Document,
 } from "@element-plus/icons-vue";
 
+// vue-echarts imports
+import VChart from "vue-echarts";
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { PieChart, LineChart } from "echarts/charts";
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  ToolboxComponent,
+} from "echarts/components";
+import * as echarts from "echarts";
+
+// Register ECharts components
+use([
+  CanvasRenderer,
+  PieChart,
+  LineChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  ToolboxComponent,
+]);
+
 const router = useRouter();
-const chartRef = ref<HTMLElement | null>(null);
-const lineChartRef = ref<HTMLElement | null>(null);
-const ecgChartRef = ref<HTMLElement | null>(null);
+const pieOption = ref<any>({});
+const lineOption = ref<any>({});
+const ecgOption = ref<any>({});
+
 const stats = ref<any[]>([]);
 const globalStats = ref({ total: 0, alive: 0, rate: "0.00" });
 const history = ref<any[]>([]);
@@ -362,16 +400,12 @@ const fetchStats = async () => {
 };
 
 const updateChart = () => {
-  if (!chartRef.value) return;
-  const myChart =
-    echarts.getInstanceByDom(chartRef.value) || echarts.init(chartRef.value);
-
   const data = stats.value.map((s) => ({
     name: s.region,
     value: s.count,
   }));
 
-  const option = {
+  pieOption.value = {
     backgroundColor: "transparent",
     title: {
       text: "地区资产分布",
@@ -413,28 +447,16 @@ const updateChart = () => {
       },
     ],
   };
-
-  myChart.setOption(option);
 };
 
 const updateLineChart = () => {
-  if (!lineChartRef.value) return;
-  const myChart =
-    echarts.getInstanceByDom(lineChartRef.value) ||
-    echarts.init(lineChartRef.value, null, { renderer: "svg" });
-
   const data = history.value || [];
   const dates = data.map((h) => new Date(h.timestamp).toLocaleTimeString());
   const aliveCounts = data.map((h) => h.alive_count);
   const totalCounts = data.map((h) => h.total_count);
 
-  const option = {
+  lineOption.value = {
     backgroundColor: "transparent",
-    // title: {
-    //   text: "存活数量变化趋势",
-    //   left: "center",
-    //   textStyle: { color: "#fff" },
-    // },
     tooltip: {
       trigger: "axis",
       backgroundColor: "rgba(20, 20, 35, 0.9)",
@@ -513,14 +535,9 @@ const updateLineChart = () => {
       },
     ],
   };
-
-  myChart.setOption(option);
 };
 
 const initEcgChart = () => {
-  if (!ecgChartRef.value) return;
-  const myChart = echarts.init(ecgChartRef.value);
-
   // Initial empty data
   for (let i = 0; i < MAX_ECG_POINTS; i++) {
     ecgData.value.push({
@@ -529,7 +546,7 @@ const initEcgChart = () => {
     });
   }
 
-  const option = {
+  ecgOption.value = {
     backgroundColor: "transparent",
     grid: {
       left: 10,
@@ -575,22 +592,18 @@ const initEcgChart = () => {
       },
     ],
   };
-
-  myChart.setOption(option);
 };
 
 const updateEcgChart = () => {
-  if (!ecgChartRef.value) return;
-  const myChart = echarts.getInstanceByDom(ecgChartRef.value);
-  if (!myChart) return;
-
-  myChart.setOption({
+  ecgOption.value = {
+    ...ecgOption.value,
     series: [
       {
+        ...ecgOption.value.series[0],
         data: ecgData.value,
       },
     ],
-  });
+  };
 };
 
 // Actions
@@ -752,15 +765,8 @@ onMounted(async () => {
     }
   );
 
-  window.addEventListener("resize", handleResize);
+  // window.addEventListener("resize", handleResize);
 });
-
-const handleResize = () => {
-  if (chartRef.value) echarts.getInstanceByDom(chartRef.value)?.resize();
-  if (lineChartRef.value)
-    echarts.getInstanceByDom(lineChartRef.value)?.resize();
-  if (ecgChartRef.value) echarts.getInstanceByDom(ecgChartRef.value)?.resize();
-};
 
 onUnmounted(() => {
   if (removeProgressListener) removeProgressListener();
@@ -768,7 +774,7 @@ onUnmounted(() => {
   if (removeStatusListener) removeStatusListener();
   if (removeRoundCompleteListener) removeRoundCompleteListener();
   if (removeAssetUpdateListener) removeAssetUpdateListener();
-  window.removeEventListener("resize", handleResize);
+  // window.removeEventListener("resize", handleResize);
 });
 </script>
 

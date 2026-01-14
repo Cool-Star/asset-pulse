@@ -59,6 +59,7 @@
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.22",
     "vue": "^3.3.8",
+    "vue-echarts": "^8.0.1",
     "vue-router": "^4.5.1"
   },
   "build": {
